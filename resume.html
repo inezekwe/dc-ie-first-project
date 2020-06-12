@@ -1,24 +1,69 @@
 <!DOCTYPE html>
 <!--doctype tells the browser which version of html-->
-<head></head>
+<head>
+    <style>
+    p {
+        color: turquoise;
+        font-size: 1.5em;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    h1 {
+        color: purple;
+        text-align: center;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    ul {
+        color: teal;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+    h3 {
+        color:thistle;
+        font-family: Verdana, Geneva, Tahoma, sans-serif; 
+    }
+    .my-header {
+        width: 200px;
+        height: 200px;
+    }
+
+    .odd {
+        color: orange;
+    }
+    .even {
+        color: red;
+    }
+    #job-header {
+        color: green;
+    }
+    #profile-img {
+        background-color: pink;
+        padding-top: 50px;
+        padding-bottom: 100px;
+        padding-left: 100px;
+        margin-top: 100px;
+        margin-bottom: 100px;
+    }
+    </style>
+</head>
 <body>
     <h1>Ifeoma Ezekwe</h1>
     <p>Phone Number</p>
-    <p>8chopsuey@gmail.com</p>
+    <p>8chopy@gmail.com</p>
 
-    <img width = "50" height = "50" src = "C://Users/8chop/Pictures/Cell Phone/20170222_131053.jpg">
+    <div id="profile-img">
+    <img class = "my-header" src = "C://Users/8chop/Pictures/Cell Phone/20170222_131053.jpg">
+    </div>
 
-    <h3>Professional Summary</h3>
+    <h3 class = "odd">Professional Summary</h3>
     <p>I am a web developer, entrepeneur, and cook</p>
 
-    <h3>Work Experience</h3>
-    <h3>DigitalCrafts Student</h3>
+    <h3 class = "even">Work Experience</h3>
+    <h3 id = "job-header">DigitalCrafts Student</h3>
     <ul>
         <li>Learn how to code</li>
         <li>Build portfolio and complete group projects</li>
         <li>Earn experience</li>
     </ul>
-    <h3>DSW Sales Associate</h3>
+    <h3 class = "odd">DSW Sales Associate</h3>
     <ul>
         <li>Interact with customers and provide fulfilling shopping experience</li>
         <li>Manage customer satisfaction</li>
