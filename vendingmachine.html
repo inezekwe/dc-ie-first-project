@@ -3,7 +3,7 @@
         <style>
            h1 {
                color: red;
-               font-family: Verdana, Geneva, Tahoma, sans-serif;
+               font-family:Arial, Helvetica, sans-serif;
                text-align: center;
            }
 
@@ -14,53 +14,201 @@
            }
 
            img {
-               width: 400px;
-               height: 400px;
+              
                display: block;
                margin-right: auto;
                margin-left: auto;
+               margin-bottom: 5%;
            }
 
-           div {
-               text-align: center;
-               font-family:Verdana, Geneva, Tahoma, sans-serif;
-               background-color: pink;
+           ul {
+               list-style-type: none;
+              
+           }
+           fieldset {
+               float: left;
+               width: 30%;
+               margin-right: 1%;
+               margin-bottom: 2.5%;
+               border-radius: 1em;
+               border: 3px solid red;
+              font-size: 100%;
+           }
+           #money_field {
+               margin-left: 1%;
+           }
+           legend {
+               font-family: Arial, Helvetica, sans-serif;
+               color: red;
+               font-size: 150%;
+               font-weight: bolder;
+           }
+           input[type="button"], input[type="reset"]{
+               background-color: red;
+               color: white;
+               font-family: Arial, Helvetica, sans-serif;
+               border-radius: 1em;
+               border: red solid;
+               padding: .75em;
+               margin: .25em;
+
            }
 
+           input[type="button"]:hover, input[type="reset"]:hover {
+               cursor: pointer;
+               background-color: darkred;
+               border: darkred solid;
+               
+           }
+
+           label {
+               color: red;
+               font-family: Arial, Helvetica, sans-serif;
+               font-size: 125%;
+               padding: .25em;
+           }
         </style>
+
+        
+    
     </head>
+    
     <body>
         <h1>Vending Machine</h1>
 
         <p>Sells snacks and drinks</p>
 
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQXFsgO3rCBkRgdJmvaqTT73Rdbc8ivhHnTRczih7N3HFn_dGUV&usqp=CAU">
+        <img src="https://dynaimage.cdn.cnn.com/cnn/q_auto,w_634,c_fill,g_auto,h_357,ar_16:9/http%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F171004155619-singapore-vending-machine-chef-in-box-008.jpg">
         <br>
 
         <form>
-            <div>
-                <label>Insert money here</label>
-                <input type="number">
-            </div>
-            <br/>
-            <div>
-                <label>Select item</label>
-                <select>
+            <fieldset id="money_field">
+                <legend>Insert Money</legend>
+                <ul>
+                    <li><label for="tender">$</label><input type="number" min = "0" step = "0.01" id="tender">
+                    <input type="button" value="Submit money" onclick="enterMoney()"></li>
+                    <li><textarea name="money_display" id="entered_tender" readonly></textarea></li>
+                </ul>
+                
+            </fieldset>
+            
+            
+          
+           
+            <fieldset id="snack_field">
+                <legend>Pick Your Snack</legend>
+                <ul>
+                <li><label for="menu">Snack: </label>
+                <select id="menu">
                     <option>Gushers</option>
                     <option>Snickers</option>
-                    <option>Potato chips</option>
+                    <option>Chips</option>
                     <option>Soda</option>
                     <option>Water</option>
+                    <option>Gum5</option>
                 </select>
-            </div>
-            <br>
+                <input type="button" value="Select Item" onclick="makeSelection()"></li>
+                <li><textarea name="item_display" id="selected_item" readonly></textarea></li>
+                </ul>
 
-            <div>
-                <input type="button" value="Get change">
-            </div>
+            </fieldset>
             
-            <br>
+            
 
+            
+            
+            <fieldset id="change_field">
+                <legend>Receive Change and Eat Snacks</legend>
+                <ul>
+                <li><input type="button"  value="Get Change" onclick="getChange()">
+                <input type="reset" value="Eat Bag" onclick="eatBag()"></li>
+
+                
+                <li><textarea name="change_display" id="change" readonly>
+                   
+                </textarea></li>
+                </ul>
+                
+                    
+                
+            </fieldset>
+            
+         
         </form>
     </body>
+
+<script type="text/javascript">
+
+        var totalTendered = 0;
+        var items = {
+            Snickers : 1.00,
+            Gushers : 1.50,
+            Gum : 0.25,
+            Soda : 1.00,
+            Chips: 1.50,
+            Water : 1.00
+        };
+        //Bag of items
+        var bag = [];
+        
+        var getItems = function() {
+        return items;
+        }
+        function enterMoney() {
+            
+            var tender = parseFloat(document.getElementById("tender").value);
+            var t = tender.toFixed(2);
+            tender = parseFloat(t);
+
+            if(isNaN(tender) == false) {
+                        totalTendered += tender;
+                        document.getElementById('entered_tender').innerHTML = "$" + totalTendered;
+            } else {
+                alert("You entered the wrong amount");
+            }
+        }
+        
+        function makeSelection(){
+            
+            var selection = document.getElementById("menu").value;
+            
+            if(!items[selection]) {
+	            alert( "Item is not in vending machine");
+	        }
+	        else if(items[selection] <= totalTendered) {
+	            totalTendered = totalTendered - items[selection];
+	            bag.push(selection);
+	            document.getElementById("selected_item").innerHTML = bag + " are in your bag";
+	        }
+	        else
+	            alert("Not enough money to buy " + selection);
+
+           
+        }
+        
+        function getChange() {
+            if(!totalTendered) {
+                alert("There is no money to return");
+            }
+            else {
+                var amountToReturn = totalTendered;
+                //remove all the money
+                totalTendered = 0;
+                document.getElementById("change").innerHTML = "$" + amountToReturn;
+            }
+        }
+
+        function eatBag() {
+            if(bag.length == 0) {
+                alert("There is nothing in your bag!");
+                }
+            else {
+                var bagItems = bag.length;
+                for(var i = bagItems-1; i >= 0; i--) {
+                    alert("You ate the " + bag[i] + " in your bag!");
+                    bag.pop();
+                    }   
+            }
+        }   
+    </script>
 </html>
